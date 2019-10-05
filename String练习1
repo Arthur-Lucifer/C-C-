@@ -1,4 +1,4 @@
-题目描述
+/*题目描述
 找出字符串中第一个只出现一次的字符
 
 输入描述:
@@ -11,8 +11,8 @@
 输入
 asdfasdfo
 输出
-o
-
+o*/
+//代码：
 #include<iostream>
 #include<string>
 using namespace std;
