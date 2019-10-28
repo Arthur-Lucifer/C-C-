@@ -54,7 +54,7 @@ String& String::insert(size_t pos, const char* str)
 
 	int len = strlen(str);
 	_size += len;
-	if (_size > _capacity) {
+	while(_size > _capacity) {
 		reserve(_capacity * 2);
 	}//空间不足则扩容
 
@@ -251,7 +251,7 @@ void Test3()
 }
 int main()
 {
-	Test1();
+	Test3();
 	system("pause");
 	return 0;
 }
