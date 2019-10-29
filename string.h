@@ -1,8 +1,11 @@
 #pragma once
+#pragma warning(disable:4996)
 
-#include <iostream>
-#include <assert.h>
-#include <string.h>
+#include<iostream>
+#include<assert.h>
+#include<string.h>
+
+using namespace std;
 
 class String {
 	friend std::ostream& operator<<(std::ostream& _cout, const String& s);
@@ -37,7 +40,9 @@ public:
 
 		_size = strlen(str);
 		reserve(_size);
-		strcpy(_str, str);
+		if (_size) {
+			strcpy(_str, str);
+		}
 	}
 
 	~String() {
@@ -67,15 +72,19 @@ public:
 
 public:
 	void reserve(size_t capacity);
-
 	void resize(size_t size, char ch = 0);
 
 public:
 	String& operator+=(char ch);
+
 	String& operator+=(const char* str);
+
 	String operator+(char ch) const;
+
 	String operator+(const char* str) const;
+
 	char& operator[](size_t pos);
+
 	const char& operator[](size_t pos) const;
 
 public:
@@ -83,6 +92,7 @@ public:
 	String& insert(size_t pos, const char* str);
 	String& push_back(char ch);
 	String& append(const char* str);
+	String& append(size_t n, char c);
 	String& erase(size_t pos, size_t len = -1);
 	size_t find(char ch, size_t pos = 0) const;
 	size_t find(const char* str, size_t pos = 0) const;
@@ -91,7 +101,7 @@ public:
 	bool operator>(const String& s) const;
 	bool operator==(const String& s) const;
 	bool operator>=(const String& s) const;
-  bool operator<(const String& s) const;
+	bool operator<(const String& s) const;
 	bool operator<=(const String& s) const;
 	bool operator!=(const String& s) const;
 
@@ -121,5 +131,8 @@ private:
 };
 
 std::ostream& operator<<(std::ostream& _cout, const String& s);
-
 std::istream& operator>>(std::istream& _cin, String& s);
+
+void Test1();
+void Test2();
+void Test3();
