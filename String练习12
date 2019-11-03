@@ -16,25 +16,26 @@ N 的取值范围是 [1, 10000]。
 */
 
 class Solution {
-    public int rotatedDigits(int N) {
-         int count = 0;
+public:
+    int rotatedDigits(int N) {
+        int count = 0;
         for (int i = 2; i <= N; i++) {
             int num = i;
-            boolean isRotatedDig = false;
+            bool flag = false;
             while(num!=0){
-                int roat = num%10;
-                if (roat == 2 || roat == 5 || roat == 6 || roat == 9){
-                    isRotatedDig = true;
+                int rotated = num%10;
+                if (rotated == 2 || rotated == 5 || rotated == 6 || rotated == 9){
+                    flag = true;
                 }
-                if (roat == 3 || roat == 4 || roat == 7){
+                if (rotated == 3 || rotated == 4 || rotated == 7){
                     break;
                 }
                 num = num/10;
             }
-            if (num == 0 && isRotatedDig == true){
+            if (num == 0 && flag == true){
                 count++;
             }
         }
         return count;
     }
-}
+};
