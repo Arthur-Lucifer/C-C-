@@ -1,0 +1,133 @@
+以下能对二维数组a进行正确初始化的语句是（）
+A int ta[2][]={{0,1,2},{3,4,5}};
+B int ta[][3]={{0,1,2},{3,4,5}};
+C int ta[2][4]={{0,1,2},{3,4},{5}};
+D int ta[][3]={{0,,2},{},{3,4,5}};
+正确答案：B
+
+下面3段程序代码的效果一样吗？
+int b;
+(1)const int *a = &b;
+(2)int const *a = &b;
+(3)int *const a = &b;
+A (2)=(3)
+B (1)=(3)
+C (1)=(2)
+D 都不一样
+E 都一样
+正确答案：C
+
+下面关于一个类的静态成员描述中,不正确的是()
+A 静态成员变量可被该类的所有方法访问
+B 该类的静态方法只能访问该类的静态成员函数
+C 该类的静态数据成员变量的值不可修改
+D 子类可以访问父类的静态成员
+E 静态成员无多态特性
+正确答案：C
+
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(void)
+{
+vector<int>array;
+array.push_back(100);
+array.push_back(300);
+array.push_back(300);
+array.push_back(300);
+array.push_back(300);
+array.push_back(500);
+vector<int>::iterator itor;
+for(itor=array.begin();itor!=array.end();itor++)
+{
+if(*itor==300)
+{
+itor=array.erase(itor);
+}
+}
+for(itor=array.begin();itor!=array.end();itor++)
+{
+cout<<*itor<<"";
+}
+return 0;
+}
+下面这个代码输出的是()
+A 100 300 300 300 300 500
+B 100 3OO 300 300 500
+C 100 300 300 500
+D 100 300 500
+E 100 500
+F 程序错误
+正确答案：C
+
+1. 读入一个字符串str，输出字符串str中的连续最长的数字串
+输入描述：
+个测试输入包含1个测试用例，一个字符串str，长度不超过255。
+输出描述：
+在一行内输出str中里连续最长的数字串。
+示例1:
+输入
+abcd12345ed125ss123456789
+输出
+123456789
+正确答案：
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+  string str,res,cur;
+  cin>>str;
+  for(int i=0;i<=str.length();i++)
+  {
+    if(str[i]>='0' && str[i]<='9')
+    {
+      cur+=str[i];
+    }
+    else
+    {
+      if(res.length() < cur.length())
+        res=cur;
+      else
+        cur.clear();
+    }
+  }
+  cout<<res;
+  return 0;
+}
+2. 输入n个整数，输出出现次数大于等于数组长度一半的数。
+输入描述：
+每个测试输入包含 n个空格分割的n个整数，n不超过100，其中有一个整数出现次数大于等于n/2。
+输出描述：
+输出出现次数大于等于n/2的数。
+示例1:
+输入
+3 9 3 2 5 6 7 3 2 3 3 3
+输出
+3
+正确答案：
+#include <vector>
+#include <iostream>
+using namespace std;
+int main()
+{
+  int n;
+  vector <int> vec;
+  while(cin >> n)
+  vec.push_back(n);
+  int count = 1;
+  int temp = vec[0];
+  for(int i = 1; i < vec.size(); ++i){
+if(vec[i] == temp)
+count++;
+else
+count--;
+if(count == 0)
+{
+temp = vec[i];
+count++;
+}
+}
+cout << temp << endl;
+return 0;
+}
