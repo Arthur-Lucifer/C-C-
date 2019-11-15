@@ -30,26 +30,26 @@ E 静态成员无多态特性
 using namespace std;
 int main(void)
 {
-vector<int>array;
-array.push_back(100);
-array.push_back(300);
-array.push_back(300);
-array.push_back(300);
-array.push_back(300);
-array.push_back(500);
-vector<int>::iterator itor;
-for(itor=array.begin();itor!=array.end();itor++)
-{
-if(*itor==300)
-{
-itor=array.erase(itor);
-}
-}
-for(itor=array.begin();itor!=array.end();itor++)
-{
-cout<<*itor<<"";
-}
-return 0;
+  vector<int>array;
+  array.push_back(100);
+  array.push_back(300);
+  array.push_back(300);
+  array.push_back(300);
+  array.push_back(300);
+  array.push_back(500);
+  vector<int>::iterator itor;
+  for(itor=array.begin();itor!=array.end();itor++)
+  {
+    if(*itor==300)
+    {
+      itor=array.erase(itor);
+    }
+  }
+  for(itor=array.begin();itor!=array.end();itor++)
+  {
+    cout<<*itor<<"";
+  }
+  return 0;
 }
 下面这个代码输出的是()
 A 100 300 300 300 300 500
@@ -76,23 +76,25 @@ abcd12345ed125ss123456789
 using namespace std;
 int main()
 {
-  string str,res,cur;
-  cin>>str;
-  for(int i=0;i<=str.length();i++)
+  string str;
+  getline(cin,str);
+  int size = 0;
+  string ret;
+  for(int i = 0;i<str.size();i++)
   {
-    if(str[i]>='0' && str[i]<='9')
+    string temp;
+    while(str[i]>='0' && str[i]<='9' && i<str.size())
     {
-      cur+=str[i];
+      temp.push_back(str[i]);
+      i++;
     }
-    else
+    if(temp.size()>size)
     {
-      if(res.length() < cur.length())
-        res=cur;
-      else
-        cur.clear();
+      size = temp.size();
+      ret.swap(temp);
     }
   }
-  cout<<res;
+  cout<<ret<<endl;
   return 0;
 }
 2. 输入n个整数，输出出现次数大于等于数组长度一半的数。
@@ -106,28 +108,22 @@ int main()
 输出
 3
 正确答案：
-#include <vector>
-#include <iostream>
-using namespace std;
-int main()
-{
-  int n;
-  vector <int> vec;
-  while(cin >> n)
-  vec.push_back(n);
-  int count = 1;
-  int temp = vec[0];
-  for(int i = 1; i < vec.size(); ++i){
-if(vec[i] == temp)
-count++;
-else
-count--;
-if(count == 0)
-{
-temp = vec[i];
-count++;
-}
-}
-cout << temp << endl;
-return 0;
-}
+class Solution {
+public:
+  int MoreThanHalfNum_Solution(vector<int> numbers) {
+    sort(numbers.begin(),numbers.end());
+    int count = 0;
+    int size = numbers.size();
+    int min = numbers[size/2];
+    for(int i = 0 ;i<size;i++)
+    {
+      if(numbers[i] == min){
+        count++;
+      }
+      if(count>(size/2)){
+        return min;
+      }
+    }
+    return 0;
+  }
+};
