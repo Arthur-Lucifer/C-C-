@@ -1,0 +1,154 @@
+请声明一个指针，其所指向的内存地址不能改变，但内存中的值可以被改变。
+A const int const *x = &y;
+B int * const x = &y;
+C const int *x = &y;
+D int const *x = &y;
+E const int * const x = &y;
+他的回答： C (错误)
+正确答案： B
+
+下面哪个指针表达式可以用来引用数组元素a[i][j][k][l]()
+A (((a+i)+j)+k)+l)
+B *(*(*(*(a+i)+j)+k)+l)
+C (((a+i)+j)+k+l)
+D ((a+i)+j+k+l)
+他的回答： A (错误)
+正确答案： B
+
+以下程序的输出结果是：
+int fun(int a){
+a^=(1<<5)-1;
+return a;
+}
+#include <iostream>
+using namespace std;
+void func(char **m){
+++m;
+cout<<*m<<endl;
+}
+int main(){
+static char *a[]={"morning", "afternoon", "evening"};
+char **p;
+p=a;
+func(p);
+return 0;
+}
+A afternoon
+B 字符o的起始地址
+C 字符o
+D 字符a的起始地址
+他的回答： C (错误)
+正确答案： A
+
+代码执行后，a和b的值分别为?
+#include<iostream>
+using namespace std;
+class MyClass{
+public:
+MyClass(int i=0){cout<<1;}
+MyClass(const MyClass&x){cout<<2;}
+MyClass& operator=(const MyClass&x){cout<<3; return*this;}
+~MyClass(){cout<<4;}
+};
+int main(){
+MyClass obj1(1),obj2(2),obj3(obj1);
+return 0;
+}
+class Test{
+public:
+int a;
+int b;
+virtual void fun() {}
+Test(int temp1 = 0, int temp2 = 0)
+{
+a=temp1 ;
+b=temp2 ;
+}
+int getA()
+{
+return a;
+}
+int getB()
+{
+return b;
+}
+};
+int main()
+{
+Test obj(5, 10);
+// Changing a and b
+int* pInt = (int*)&obj;
+*(pInt+0) = 100;
+*(pInt+1) = 200;
+cout << "a = " << obj.getA() << endl;
+cout << "b = " << obj.getB() << endl;
+return 0;
+}
+A 200 10
+B 5 10
+C 100 200
+D 100 10
+他的回答： B (错误)
+正确答案： A
+
+请编写一个函数，将两个数字相加。不得使用+或其他算数运算符。
+给定两个int A和B。请返回A＋B的值
+测试样例：
+1,2
+返回：3
+输入描述：
+输出描述：
+示例1:
+输入
+输出
+正确答案：
+class UnusualAdd {
+public:
+  int addAB(int A, int B) {
+    // write code here
+    while(B)
+    {
+      int sum = A^B;
+      int carry = (A&B)<<1;
+      A = sum;
+      B = carry;
+    }
+    return A;
+  }
+};
+2.
+请编写一个函数（允许增加子函数），计算n x m的棋盘格子（n为横向的格子数，m为竖向的格子数）沿着各
+自边缘线从左上角走到右下角，总共有多少种走法，要求不能走回头路，即：只能往右和往下走，不能往左
+和往上走。
+输入描述：
+输入两个正整数
+输出描述：
+返回结果
+示例1:
+输入
+2
+2
+输出
+6
+正确答案：
+#include<iostream>
+using namespace std;
+int cell(int n,int m)
+{
+  if(n == 0 || m == 0)
+    return 1;
+  int x = 0,y = 0;
+  if(n>=1)
+    x = cell(n-1,m);
+  if(m>=1)
+    y = cell(n,m-1);
+  return x+y;
+}
+int main()
+{
+  int A,B;
+  while(cin>>A>>B){
+    cout<<cell(A,B)<<endl;
+  }
+  return 0;
+}
