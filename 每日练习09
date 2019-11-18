@@ -1,0 +1,227 @@
+下面关于"指针"的描述不正确的是()
+A 当使用free释放掉一个指针内容后,指针变量的值被置为NULL
+B 32位系统下任何类型指针的长度都是4个字节
+C 指针的数据类型声明的是指针实际指向内容的数据类型
+D 野指针是指向未分配或者已经释放的内存地址
+他的回答： B (错误)
+正确答案： A
+
+以下程序统计给定输入中每个大写字母的出现次数(不需要检查输入合法性)
+void AlphabetCounting(char a[],int n){
+int count[26]={},i,kind=0;
+for(i=0;i<n;++i) (1);
+for(i=0;i<26;++i){
+if(++kind>1) putchar(';');
+printf("%c=%d",(2));
+}
+}
+以下能补全程序，正确功能的选项是()
+A ++count[a[i]-'Z'];'Z'-i,count['Z'-i]
+B ++count['A'-a[i]];'A'+i,count[i]
+C ++count[i];i,count[i]
+D ++count['Z'-a[i]];'Z'-i,count[i]
+E ++count[a[i]];'A'+i,count[a[i]]
+他的回答： A (错误)
+正确答案： D
+
+请找出下面程序中有哪些错误：
+int main()
+{
+int i=10;
+int j=1;
+const int *p1;//(1)
+int const *p2=&i; //(2)
+p2=&j;//(3)
+int *const p3=&i;//(4)
+*p3=20;//(5)
+*p2=30;//(6)
+p3=&j;//(7)
+return 0;
+}
+A 1,2,3,4,5,6,7
+B 1,3,5,6
+C 6,7
+D 3,5
+他的回答： A (错误)
+正确答案： C
+
+假定有类AB，有相应的构造函数定义，能正确执行
+AB a(4),b(5),c[3],*p[2]={&a,&b};
+语句，请问执行完此语句后共调用该类的构造函数次数为___
+A 5
+B 4
+C 3
+D 9
+他的回答： D (错误)
+正确答案： A
+
+以下程序输出结果是____
+#include <iostream.h>
+class cla{
+static int n;
+public:
+cla(){n++;}
+~cla(){n--;}
+static int get_n(){return n;}
+};
+int cla::n= 0;
+int main()
+{
+cla *p =new cla;
+delete p;
+cout<<"n="<<cla::get_n()<<endl;
+return 0;
+}
+class A
+{
+public:
+A ():m_iVal(0){test();}
+virtual void func() { std::cout<<m_iVal<<‘ ’;}
+void test(){func();}
+public:
+int m_iVal;
+};
+class B : public A
+{
+public:
+B(){test();}
+virtual void func()
+{
+++m_iVal;
+std::cout<<m_iVal<<‘ ’;
+}
+};
+int main(int argc ,char* argv[])
+{
+A*p = new B;
+p->test();
+return 0;
+}
+A 1 0
+B 0 1
+C 0 1 2
+D 2 1 0
+E 不可预期
+F 以上都不对
+他的回答： A (错误)
+正确答案： C
+
+1. 考拉有n个字符串字符串，任意两个字符串长度都是不同的。考拉最近学习到有两种字符串的排序方法： 1.
+根据字符串的字典序排序。例如：
+"car" < "carriage" < "cats" <
+"doggies < "koala"
+2.根据字符串的长度排序。例如：
+"car" < "cats" < "koala" <
+"doggies" < "carriage"
+考拉想知道自己的这些字符串排列顺序是否满足这两种排序方法，考拉要忙着吃树叶，所以需要你来帮忙验
+证。
+输入描述：
+输入第一行为字符串个数n(n ≤ 100)
+接下来的n行,每行一个字符串,字符串长度均小于100，均由小写字母组成
+输出描述：
+如果这些字符串是根据字典序排列而不是根据长度排列输出"lexicographically",
+如果根据长度排列而不是字典序排列输出"lengths",
+如果两种方式都符合输出"both"，否则输出"none"
+示例1:
+输入
+3
+a
+aa
+bbb
+输出
+both
+正确答案：
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+bool lengths(vector<string> v)
+{
+    for(size_t i = 1;i<v.size();i++)
+    {
+        if(v[i-1].size()>v[i].size())
+            return false;
+    }
+    return true;
+}
+bool dictionary(string A,string B)
+{
+    int i = 0,j = 0;
+    while(A[i] && B[j] && A[i]==B[j]){
+        i++;
+        j++;
+    }
+    if(!A[i])
+        return true;
+    if(!B[j])
+        return false;
+    if(A[i]<B[j])
+        return true;
+    else
+        return false;
+}
+bool lexicographically(vector<string> v)
+{
+    for(size_t i = 1;i<v.size();i++)
+    {
+        if(!dictionary(v[i-1],v[i]))
+            return false;
+    }
+    return true;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    vector<string> v(n);
+    //getchar();
+    for(size_t i = 0;i<n;i++)
+    {
+        //getline(cin,v[i]);
+        cin>>v[i];
+    }
+    if(lengths(v) && lexicographically(v))
+        cout<<"both"<<endl;
+    else if(lengths(v))
+        cout<<"lengths"<<endl;
+    else if(lexicographically(v))
+        cout<<"lexicographically"<<endl;
+    else
+        cout<<"none"<<endl;
+    return 0;
+}
+2.
+正整数A和正整数B 的最小公倍数是指 能被A和B整除的最小的正整数值，设计一个算法，求输入A和B的最小
+公倍数。
+输入描述：
+输入两个正整数A和B。
+输出描述：
+输出A和B的最小公倍数。
+示例1:
+输入
+5
+7
+输出
+35
+正确答案：
+#include<iostream>
+using namespace std;
+int LCM(int A,int B)
+{
+    if(A>B)
+        swap(A,B);
+    int i = 2;
+    while(1)
+    {
+        if((A*i)%B==0)
+            return A*i;
+        i++;
+    }
+}
+int main()
+{
+    int A,B;
+    cin>>A>>B;
+    cout<<LCM(A,B)<<endl;
+    return 0;
+}
