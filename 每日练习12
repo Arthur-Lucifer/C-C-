@@ -1,0 +1,127 @@
+在一个64位的操作系统中定义如下结构体：
+struct st_task
+{
+uint16_t id;
+uint32_t value;
+uint64_t timestamp;
+};
+同时定义fool函数如下：
+void fool()
+{
+st_task task = {};
+uint64_t a = 0x00010001;
+memcpy(&task, &a, sizeof(uint64_t));
+printf("%11u,%11u,%11u", task.id, task.value, task.timestamp);
+}
+上述fool()程序的执行结果为（）
+A 1，0，0
+B 1，1，0
+C 0，1，1
+D 0，0，1
+他的回答： D (错误)
+正确答案： A
+
+如果有一个类是 myClass , 关于下面代码正确描述的是:
+myClass::~myClass(){
+delete this;
+this = NULL;
+}
+A 正确，我们避免了内存泄漏
+B 它会导致栈溢出
+C 无法编译通过
+D 这是不正确的，它没有释放任何成员变量。
+他的回答： A (错误)
+正确答案： C
+
+函数func的定义如下：
+void func(const int& v1, const int& v2)
+{
+std::cout << v1 << ' ';
+std::cout << v2 << ' ';
+}
+以下代码在vs中输出结果为____。
+int main (int argc, char* argv[])
+{
+int i=0;
+func(++i,i++);
+return 0;
+}
+A 0 1
+B 1 2
+C 2 1
+D 2 0
+E 程序强制终止并报错
+F 结果与编译器有关
+他的回答： E (错误)
+正确答案： D
+
+有两个32位整数n和m，请编写算法将m的二进制数位插入到n的二进制的第j到第i位,其中二进制的位数从低位
+数到高位且以0开始。
+给定两个数int n和int m，同时给定int j和int i，意义如题所述，请返回操作后的数，保证n的第j到第i位均为
+零，且m的二进制位数小于等于i-j+1。
+测试样例：
+1024，19，2，6
+返回：1100
+输入描述：
+输出描述：
+示例1:
+输入
+输出
+正确答案：
+class BinInsert {
+public:
+    int binInsert(int n, int m, int j, int i) {
+        // write code here
+        return (m<<=j) | n;
+    }
+};
+
+题目标题：
+计算两个字符串的最大公共字串的长度，字符不区分大小写
+详细描述：
+接口说明
+原型：
+int getCommonStrLength(char * pFirstStr, char * pSecondStr);
+输入参数：
+char * pFirstStr //第一个字符串
+char * pSecondStr//第二个字符串
+输入描述：
+输入两个字符串
+输出描述：
+输出一个整数
+示例1:
+输入
+asdfas werasdfaswer
+输出
+6
+正确答案：
+#include<iostream>
+using namespace std;
+bool prime(int x)
+{
+    for(int i = 2;i < x;i++)
+    {
+        if(x%i==0)
+            return false;
+    }
+    return true;
+}
+int main()
+{
+    int even;
+    while(cin>>even)
+    {
+        int a = even/2;
+        int b = 0;
+        while(a)
+        {
+            b = even - a;
+            if(prime(a) && prime(b))
+                break;
+            a--;
+        }
+        cout<<a<<endl;
+        cout<<b<<endl;
+    }
+    return 0;
+}
