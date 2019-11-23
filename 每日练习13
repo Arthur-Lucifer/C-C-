@@ -1,0 +1,112 @@
+1.
+在命令行输入如下命令：
+xcopy /s c:\ d:\，
+各个参数如下：
+参数1：命令字xcopy
+参数2：字符串/s
+参数3：字符串c:\
+参数4: 字符串d:\
+请编写一个参数解析程序，实现将命令行各个参数解析出来。
+解析规则：
+1.参数分隔符为空格
+2.对于用“”包含起来的参数，如果中间有空格，不能解析为多个参数。比如在命令行输入
+xcopy /s “C:\program files” “d:\”时，参数仍然是4个，第3个参数应该是字符串C:\program files，而不是
+C:\program，注意输出参数时，需要将“”去掉，引号不存在嵌套情况。
+3.参数不定长
+4.输入由用例保证，不会出现不符合要求的输入
+输入描述：
+输入一行字符串，可以有空格
+输出描述：
+输出参数个数，分解后的参数，每个参数都独占一行
+示例1:
+输入
+xcopy /s c:\\ d:\\
+输出
+4
+xcopy
+/s
+c:\\
+d:\\
+正确答案：
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    string str;
+    getline(cin,str);
+
+    int flag = 1;
+    int count = 0;
+    for(int i = 0;i<str.size();i++)
+    {
+        if(str[i] == '"')
+            flag ^= 1;
+        if(flag && str[i] == ' ')
+            count++;
+    }
+    cout<<++count<<endl;
+    for(int i = 0;i<str.size();i++)
+    {
+        if(str[i] == '"'){
+            flag ^= 1;
+            i++;
+        }
+        if(flag && str[i] == ' '){
+            cout<<endl;
+            i++;
+        }
+        cout<<str[i];
+    }
+    return 0;
+}
+2. 小易来到了一条石板路前，每块石板上从1挨着编号为：1、2、3.......
+这条石板路要根据特殊的规则才能前进：对于小易当前所在的编号为K的 石板，小易单次只能往前跳K的一个
+约数(不含1和K)步，即跳到K+X(X为K的一个非1和本身的约数)的位置。 小易当前处在编号为N的石板，他想
+跳到编号恰好为M的石板去，小易想知道最少需要跳跃几次可以到达。
+例如：
+N = 4，M = 24：
+4->6->8->12->18->24
+于是小易最少需要跳跃5次，就可以从4号石板跳到24号石板
+输入描述：
+输入为一行，有两个整数N，M，以空格隔开。 (4 ≤ N ≤ 100000) (N ≤ M ≤ 100000)
+输出描述：
+输出小易最少需要跳跃的步数,如果不能到达输出-1
+示例1:
+输入
+4 24
+输出
+5
+正确答案：
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<climits>
+using namespace std;
+int main()
+{
+    int N,M;
+    cin>>N>>M;
+    vector<int> v(M+1,INT_MAX);
+    v[N] = 0;
+    for(int i = N;i<M;i++)
+    {
+        if(v[i] == INT_MAX)
+            continue;
+        for(int j = 2;j<=sqrt(i);j++)
+        {
+            if(i%j == 0){
+                if(i+j<=M)
+                    v[i+j] = min(v[i]+1,v[i+j]);
+                if(i+i/j<=M)
+                    v[i+i/j] = min(v[i]+1,v[i+i/j]);
+            }
+                
+        }
+    }
+    if(v[M]!=INT_MAX)
+        cout<<v[M]<<endl;
+    else
+        cout<<-1<<endl;
+    return 0;
+}
