@@ -1,0 +1,91 @@
+class Gloves {
+public:
+    int findMinimum(int n, vector<int> left, vector<int> right) {
+        // write code here
+        int ln = 0;
+        int rn = 0;
+        vector<bool> dou(n,true);
+        for(int i = 0 ;i<n ;i++)
+        {
+            if(!left[i] || !right[i])
+            {
+                dou[i] = false;
+                if(!left[i])
+                    rn += right[i];
+                if(!right[i])
+                    ln += left[i];
+            }
+        }
+        int lmin = 26;
+        int rmin = 26;
+        int lsum = 0;
+        int rsum = 0;
+        for(int i = 0 ;i<n ;i++)
+        {
+            lsum += left[i];
+            rsum += right[i];
+            if(dou[i] && left[i] < lmin)
+                lmin = left[i];
+            if(dou[i] && right[i] < rmin)
+                rmin = right[i];
+        }
+        int a = lsum - lmin + 1 + rn +1;
+        int b = rsum - rmin + 1 + ln +1;
+        return a<b ? a :b;
+    }
+};
+
+修改
+class Gloves {
+public:
+    int findMinimum(int n, vector<int> left, vector<int> right) {
+        // write code here
+        int kong = 0;
+        vector<bool> dou(n,true);
+        int lmin = 26,rmin = 26;
+        int lsum = 0,rsum = 0;
+        for(int i = 0 ;i<n ;i++)
+        {
+            if(!left[i] || !right[i]){
+                dou[i] = false;
+                kong += left[i] + right[i];
+            }
+            if(dou[i]){
+                lsum += left[i];
+                rsum += right[i];
+            }
+            if(dou[i] && left[i] < lmin)
+                lmin = left[i];
+            if(dou[i] && right[i] < rmin)
+                rmin = right[i];
+        }
+        return min(lsum - lmin + 1 + kong +1 , rsum - rmin + 1 + kong +1);
+    }
+};
+
+class Gloves {
+public:
+    int findMinimum(int n, vector<int> left, vector<int> right) {
+        // write code here
+        int kong = 0;
+        int lmin = 26,rmin = 26;
+        int lsum = 0,rsum = 0;
+        for(int i = 0 ;i<n ;i++)
+        {
+            bool flag = true;
+            if(!left[i] || !right[i]){
+                flag = false;
+                kong += left[i] + right[i];
+            }
+            if(flag){
+                lsum += left[i];
+                rsum += right[i];
+            }
+            if(flag && left[i] < lmin)
+                lmin = left[i];
+            if(flag && right[i] < rmin)
+                rmin = right[i];
+        }
+        return min(lsum - lmin + 1 + kong +1 , rsum - rmin + 1 + kong +1);
+    }
+};
