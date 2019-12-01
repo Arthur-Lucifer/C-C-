@@ -1,0 +1,144 @@
+1. 洗牌在生活中十分常见，现在需要写一个程序模拟洗牌的过程。 现在需要洗2n张牌，从上到下依次是第1
+张，第2张，第3张一直到第2n张。首先，我们把这2n张牌分成两堆，左手拿着第1张到第n张（上半堆），右
+手拿着第n+1张到第2n张（下半堆）。接着就开始洗牌的过程，先放下右手的最后一张牌，再放下左手的最
+后一张牌，接着放下右手的倒数第二张牌，再放下左手的倒数第二张牌，直到最后放下左手的第一张牌。接
+着把牌合并起来就可以了。 例如有6张牌，最开始牌的序列是1,2,3,4,5,6。首先分成两组，左手拿着1,2,3；右
+手拿着4,5,6。在洗牌过程中按顺序放下了6,3,5,2,4,1。把这六张牌再次合成一组牌之后，我们按照从上往下
+的顺序看这组牌，就变成了序列1,4,2,5,3,6。 现在给出一个原始牌组，请输出这副牌洗牌k次之后从上往下的
+序列。
+输入描述：
+第一行一个数T(T ≤ 100)，表示数据组数。对于每组数据，第一行两个数n,k(1 ≤ n,k ≤ 100)，接下来一行有2n
+个数a1,a2,...,a2n(1 ≤ ai ≤ 1000000000)。表示原始牌组从上到下的序列。
+输出描述：
+对于每组数据，输出一行，最终的序列。数字之间用空格隔开，不要在行末输出多余的空格。
+示例1:
+输入
+3 3 1 1 2 3 4 5 6 3 2 1 2 3 4 5 6 2 2 1 1 1 1
+输出
+1 4 2 5 3 6 1 5 4 3 2 6 1 1 1 1
+正确答案：
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+vector<int> wash(vector<int> v,int n,int k)
+{
+    if(k==0)
+        return v;
+    vector<int> v1(v.begin(),v.begin()+n);
+    vector<int> v2(v.begin()+n,v.end());
+    vector<int> res;
+    for(int i = n-1;i>=0;i--){
+        res.push_back(v2[i]);
+        res.push_back(v1[i]);
+    }
+    reverse(res.begin(),res.end());
+    return wash(res,n,--k);
+}
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--)
+    {
+        int n,k;
+        cin>>n>>k;
+        vector<int> v(2*n);
+        for(int i = 0;i<2*n;i++){
+            cin>>v[i];
+        }
+        vector<int> res = wash(v,n,k);
+        for(int i = 0;i<2*n-1;i++){
+            cout<<res[i]<<' ';
+        }
+        cout<<res[2*n-1]<<endl;
+    }
+    return 0;
+}
+
+2.
+MP3 Player因为屏幕较小，显示歌曲列表的时候每屏只能显示几首歌曲，用户要通过上下键才能浏览所有的
+歌曲。为了简化处理，假设每屏只能显示4首歌曲，光标初始的位置为第1首歌。
+现在要实现通过上下键控制光标移动来浏览歌曲列表，控制逻辑如下：
+歌曲总数<=4的时候，不需要翻页，只是挪动光标位置。
+光标在第一首歌曲上时，按Up键光标挪到最后一首歌曲；光标在最后一首歌曲时，按Down键光标挪到第一
+首歌曲。
+其他情况下用户按Up键，光标挪到上一首歌曲；用户按Down键，光标挪到下一首歌曲。
+2. 歌曲总数大于4的时候（以一共有10首歌为例）：
+特殊翻页：屏幕显示的是第一页（即显示第1 style="color: black;">– 4首）时，光标在第一首歌曲上，用户按
+Up键后，屏幕要显示最后一页（即显示第7-10首歌），同时光标放到最后一首歌上。同样的，屏幕显示最后
+一页时，光标在最后一首歌曲上，用户按Down键，屏幕要显示第一页，光标挪到第一首歌上。
+一般翻页：屏幕显示的不是第一页时，光标在当前屏幕显示的第一首歌曲时，用户按Up键后，屏幕从当前歌
+曲的上一首开始显示，光标也挪到上一首歌曲。光标当前屏幕的最后一首歌时的Down键处理也类似。
+其他情况，不用翻页，只是挪动光标就行。
+输入描述：
+输入说明：
+1 输入歌曲数量
+2 输入命令 U或者D
+输出描述：
+输出说明
+1 输出当前列表
+2 输出当前选中歌曲
+示例1:
+输入
+10
+UUUU
+输出
+7 8 9 10
+7
+正确答案：
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    int n;
+    string order;
+    while(cin>>n>>order)
+    {
+        int first = 1,song = 1;
+        if(n<=4){
+            for(int i = 0;i < order.size();i++)
+            {
+                if(song == 1 && order[i] == 'U')
+                    song = n;
+                else if(song == n && order[i] == 'D')
+                    song = 1;
+                else if(order[i] == 'U')
+                    song--;
+                else
+                    song++;
+            }
+            for (int i = 1; i <= n - 1; i++)
+                cout << i << ' ';
+            cout << n << endl;
+            cout << song << endl;
+        }
+        else{
+            for(int i = 0;i < order.size();i++)
+            {
+                if(song == 1 && order[i] == 'U'){
+                    first = n -3;
+                    song = n;
+                }
+                else if(song == n && order[i] == 'D')
+                    first = song = 1;
+                else if(first == song && order[i] == 'U')
+                    first = --song;
+                else if(first + 3 == song && order[i] == 'D'){
+                    song++;
+                    first++;
+                }
+                else if(order[i] == 'U')
+                    song--;
+                else
+                    song++;
+            }
+            for (int i = first; i < first + 3; i++)
+                cout << i << ' ';
+            cout << first + 3 << endl;
+            cout << song << endl;
+        }
+    }
+    return 0;
+}
