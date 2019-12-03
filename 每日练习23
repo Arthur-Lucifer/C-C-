@@ -1,0 +1,102 @@
+1.
+春节期间小明使用微信收到很多个红包，非常开心。在查看领取红包记录时发现，某个红包金额出现的次数
+超过了红包总数的一半。请帮小明找到该红包金额。写出具体算法思路和代码实现，要求算法尽可能高效。
+给定一个红包的金额数组gifts及它的大小n，请返回所求红包的金额。
+若没有金额超过总数的一半，返回0。
+测试样例：
+[1,2,3,2,2],5
+返回：2
+输入描述：
+输出描述：
+示例1:
+输入
+输出
+正确答案：
+class Gift {
+public:
+    int getValue(vector<int> gifts, int n) {
+        // write code here
+        sort(gifts.begin(),gifts.end());
+        int count = 0;
+        for(int i = 0;i<n;i++)
+        {
+            if(gifts[i] == gifts[n/2])
+                count++;
+            if(count>n/2)
+                return gifts[i];
+        }
+        return 0;
+    }
+};
+2.
+Levenshtein 距离，又称编辑距离，指的是两个字符串之间，由一个转换成另一个所需的最少编辑操作次数。
+许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。编辑距离的算法是首先
+由俄国科学家Levenshtein提出的，故又叫Levenshtein Distance。
+Ex：
+字符串A:abcdefg
+字符串B: abcdef
+通过增加或是删掉字符”g”的方式达到目的。这两种方案都需要一次操作。把这个操作所需要的次数定义为两
+个字符串的距离。
+要求：
+给定任意两个字符串，写出一个算法计算它们的编辑距离。
+请实现如下接口
+/*
+功能：计算两个字符串的距离
+*
+输入：
+字符串A和字符串B
+*
+输出：无
+*
+返回：如果成功计算出字符串的距离，否则返回-1
+*/
+public
+static
+int
+style="font-family: "courier new";font-size: 13.0px;"> calStringDistance ( style="background:
+silver;">String charA, String charB)
+{
+return
+0;
+}
+输入描述：
+输入两个字符串
+输出描述：
+得到计算结果
+示例1:
+输入
+abcdefg
+abcdef
+输出
+1
+正确答案：
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+int main()
+{
+    string A,B;
+    while(cin>>A>>B)
+    {
+        int An = A.size(),Bn = B.size();
+        vector<vector<int>> v(An+1,vector<int>(Bn+1,0));
+        for(int i = 0;i<=An;i++)
+            v[i][0] = i;
+        for(int i = 0;i<=Bn;i++)
+            v[0][i] = i;
+        for(int i = 1;i<=An;i++)
+        {
+            for(int j = 1;j<=Bn;j++)
+            {
+                v[i][j] = 1 + min(v[i][j-1],v[i-1][j]);
+                if(A[i-1] != B[j-1])
+                    v[i][j] = min(v[i][j],v[i-1][j-1]+1);
+                else
+                    v[i][j] = min(v[i][j],v[i-1][j-1]);
+            }
+        }
+        cout<<v[An][Bn]<<endl;
+    }
+    return 0;
+}
