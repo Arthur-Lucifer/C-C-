@@ -1,0 +1,46 @@
+1. 写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+输入描述：
+输出描述：
+示例1:
+输入
+输出
+正确答案：
+class Solution {
+public:
+    int Add(int num1, int num2)
+    {
+        int carry = (num1&num2)<<1;
+        int sum = num1^num2;
+        if(carry)
+            return Add(carry,sum);
+        else
+            return sum;
+    }
+};
+2. 给定三条边，请你判断一下能不能组成一个三角形。
+输入描述：
+输入包含多组数据，每组数据包含三个正整数a、b、c（1≤a, b, c≤10^100）。
+输出描述：
+对应每一组数据，如果它们能组成一个三角形，则输出“Yes”；否则，输出“No”。
+示例1:
+输入
+1 2 3
+2 2 2
+输出
+No
+Yes
+正确答案：
+#include<iostream>
+using namespace std;
+int main()
+{
+    double a,b,c;
+    while(cin>>a>>b>>c)
+    {
+        if(a<=c-b || a<=b-c || b<=a-c)
+            cout<<"No"<<endl;
+        else
+            cout<<"Yes"<<endl;
+    }
+    return 0;
+}
