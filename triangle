@@ -1,0 +1,51 @@
+triangle
+题目描述
+给出一个三角形，计算从三角形顶部到底部的最小路径和，每一步都可以移动到下面一行相邻的数字，
+例如，给出的三角形如下：
+[↵     [2],↵    [3,4],↵   [6,5,7],↵  [4,1,8,3]↵]
+最小的从顶部到底部的路径和是2 + 3 + 5 + 1 = 11。
+注意：
+如果你能只用O（N）的额外的空间来完成这项工作的话，就可以得到附加分，其中N是三角形中的行总数。
+
+//正向
+class Solution {
+public:
+    int minimumTotal(vector<vector<int> > &triangle) {
+        if (triangle.empty()){
+            return 0;
+        }
+        vector<vector<int>> v(triangle);
+        //v[0][0] = triangle[0][0];
+        for(int i = 1;i<triangle.size();i++)
+        {
+            v[i][0] = v[i-1][0] + triangle[i][0];
+            v[i][i] = v[i-1][i-1] + triangle[i][i];
+            for(int j = 1;j<i;j++){
+                v[i][j] = min(v[i-1][j],v[i-1][j-1]) + triangle[i][j];
+            }
+        }
+        int result = v[triangle.size() - 1][0];
+        for (int i = 1; i < triangle.size(); i++){
+            result = min(v[triangle.size() - 1][i], result);
+        }
+        return result;
+    }
+};
+//反向
+class Solution {
+public:
+    int minimumTotal(vector<vector<int> > &triangle) {
+        if (triangle.empty()){
+            return 0;
+        }
+        vector<vector<int>> v(triangle);
+        //v[0][0] = triangle[0][0];
+        for(int i = triangle.size() - 2;i>=0;i--)
+        {
+            for(int j = 0;j<=i;j++){
+                v[i][j] = min(v[i+1][j],v[i+1][j+1]) + triangle[i][j];
+            }
+        }
+        return v[0][0];
+    }
+};
