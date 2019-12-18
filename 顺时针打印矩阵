@@ -3,8 +3,9 @@ public:
     vector<int> printMatrix(vector<vector<int> > matrix) {
         vector<int> res;
         int row=matrix.size();
+        int top=0,bottom=row-1;
         int col=matrix[0].size();
-        int left=0,right=col-1,top=0,bottom=row-1;
+        int left=0,right=col-1;
         if(row==0 || col==0)
             return res;
         while(left<=right && top<=bottom)
@@ -26,7 +27,7 @@ public:
             }
             if(left!=right)
             {
-                for(int i=bottom-1;i>=top-1;--i)
+                for(int i=bottom-1;i>top;--i)
                 {
                     res.push_back(matrix[i][left]);
                 }
