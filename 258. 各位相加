@@ -22,3 +22,11 @@ public:
             return addDigits(sum);
     }
 };
+进阶:
+不使用循环或者递归，且在 O(1) 时间复杂度内解决
+class Solution {
+public:
+    int addDigits(int num) {
+        return (num - 1) % 9 + 1;
+    }
+};
