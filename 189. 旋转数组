@@ -20,6 +20,7 @@
 尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。
 要求使用空间复杂度为 O(1) 的 原地 算法。
 
+超时方法：
 class Solution {
 public:
     void rotate(vector<int>& nums, int k) {
@@ -33,5 +34,15 @@ public:
             }
             nums[0] = t;
         }
+    }
+};
+
+class Solution {
+public:
+    void rotate(vector<int>& nums, int k) {
+        k = k%nums.size();
+        reverse(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.begin()+k);
+        reverse(nums.begin()+k,nums.end());
     }
 };
