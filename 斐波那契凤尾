@@ -1,0 +1,69 @@
+NowCoder号称自己已经记住了1-100000之间所有的斐波那契数。
+为了考验他，我们随便出一个数n，让他说出第n个斐波那契数。当然，斐波那契数会很大。因此，如果第n个斐波那契数不到6位，则说出该数；否则只说出最后6位。
+
+输入描述:
+输入有多组数据。
+每组数据一行，包含一个整数n (1≤n≤100000)。
+
+
+输出描述:
+对应每一组输入，输出第n个斐波那契数的最后6位。
+示例1
+输入
+1<br/>2<br/>3<br/>4<br/>100000
+输出
+1<br/>2<br/>3<br/>5<br/>537501
+
+// write your code here cpp
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int> fib(100000);
+    vector<bool> fib2(100000);
+    fib[0] = 1;
+    fib[1] = 2;
+    for(int i = 2;i<100000;i++)
+	{
+		fib[i] = (fib[i-1] + fib[i-2]);
+		if(fib[i]>=1000000)
+		{
+			fib[i]%=1000000;
+			fib2[i] = true;
+		}
+	}
+    int n;
+    while(cin>>n)
+    {
+		if(fib2[n-1])
+			printf("%06d\n",fib[n-1]);
+		else
+			cout<<fib[n-1]<<endl;
+    }
+    return 0;
+}
+//存在问题 如果前两个相加可能依旧不过六位 bool将不会改变
+
+// write your code here cpp
+#include<iostream>
+#include<stdio.h>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<int> fib(100000);
+    fib[0] = 1;
+    fib[1] = 2;
+    for(int i = 2;i<100000;i++)
+        fib[i] = (fib[i-1] + fib[i-2])%1000000;
+    int n;
+    while(cin>>n && (n>=1 && n<=100000))
+    {
+        if(n>=31)
+            printf("%06d\n",fib[n-1]);
+        else
+            cout<<fib[n-1]<<endl;
+    }
+    return 0;
+}
