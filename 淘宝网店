@@ -1,0 +1,61 @@
+NowCoder在淘宝上开了一家网店。他发现在月份为素数的时候，当月每天能赚1元；否则每天能赚2元。
+现在给你一段时间区间，请你帮他计算总收益有多少。
+
+输入描述:
+输入包含多组数据。
+
+每组数据包含两个日期from和to (2000-01-01 ≤ from ≤ to ≤ 2999-12-31)。
+
+日期用三个正整数表示，用空格隔开：year month day。
+
+
+输出描述:
+对应每一组数据，输出在给定的日期范围（包含开始和结束日期）内能赚多少钱。
+示例1
+输入
+2000 1 1 2000 1 31<br/>2000 2 1 2000 2 29
+输出
+62<br/>29
+
+#include<iostream>
+using namespace std;
+int days[13] = {0,31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+int mons[13] = {0,2,1,1,2,1,2,1,2,2,2,1,2};
+bool leepyear(int year)
+{
+    if((year%4==0 && year%100!=0) || year%400==0)
+        return true;
+    return false;
+}
+int one(int year1,int month1,int day1,int month2,int money,int flag)
+{
+    days[2] = leepyear(year1) ? 29:28;
+    if(month1<month2)
+    {
+        money += (days[month1]-day1+1)*mons[month1++];
+        day1 = 1;
+    }
+    while(month1<month2)
+        money += days[month1]*mons[month1++];
+    if(flag)
+        money += days[month1]*mons[month1];
+    return money;
+}
+int main()
+{
+    int year1,month1,day1,year2,month2,day2;
+    while(cin>>year1>>month1>>day1>>year2>>month2>>day2)
+    {
+        int money = 0;
+        if(year1<year2)//改同年
+        {
+            money = one(year1++,month1,day1,12,money,1);
+            month1 = 1;
+            while(year1<year2)
+                money += leepyear(year1++) ? 580:579;
+        }
+        money = one(year1,month1,day1,month2,money,0)+(day2-day1+1)*mons[month1];
+        cout<<money<<endl;
+    }
+    return 0;
+}
