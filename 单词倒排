@@ -1,0 +1,82 @@
+/*
+对字符串中的所有单词进行倒排。
+
+说明：
+1、每个单词是以26个大写或小写英文字母构成；
+2、非构成单词的字符均视为单词间隔符；
+3、要求倒排后的单词间隔符以一个空格表示；如果原字符串中相邻单词间有多个间隔符时，倒排转换后也只允许出现一个空格间隔符；
+4、每个单词最长20个字母；
+
+输入描述:
+输入一行以空格来分隔的句子
+
+输出描述:
+输出句子的逆序
+
+示例1
+输入
+I am a student
+输出
+student a am I
+*/
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+string rev1(string str)
+{
+	string res;
+    for(int i = 0;i<str.size();i++)
+    {
+        while(i<str.size() && !isalpha(str[i]))
+            i++;
+        while(i<str.size() && isalpha(str[i]))
+            res += str[i++];
+        res += ' ';
+    }
+    res.erase(res.find_last_not_of(" ") + 1);
+    reverse(res.begin(), res.end());
+    auto it = res.begin();
+    int j = 0;
+    for(int i = 0;i<res.size();i++)
+    {
+        if(!isalpha(res[i]))
+        {
+            reverse(it+j, it+i);
+            j = i+1;
+        }
+    }
+    reverse(it+j,res.end());
+    return res;
+}
+void rev2(string str)
+{
+	vector<string> res;
+	for(int i = 0;i<str.size();i++)
+    {
+		string t;
+        while(i<str.size() && !isalpha(str[i]))
+            i++;
+        if(i<str.size() && isalpha(str[i]))
+		{
+			while(i<str.size() && isalpha(str[i]))
+				t += str[i++];
+			res.push_back(t);
+		}
+    }
+	for(int i = res.size()-1;i>0;i--)
+		cout<<res[i]<<" ";
+	cout<<res[0]<<endl;
+}
+int main()
+{
+    string str;
+    while(getline(cin, str))
+    {
+        //cout<<rev1(str)<<endl;
+        rev2(str);
+    }
+	return 0;
+}
