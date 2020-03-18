@@ -1,0 +1,44 @@
+输入两个整数 n 和 m，从数列1，2，3.......n 中随意取几个数,使其和等于 m ,要求将其中所有的可能组合列出来
+
+输入描述:
+每个测试输入包含2个整数,n和m
+
+
+输出描述:
+按每个组合的字典序排列输出,每行输出一种组合
+示例1
+输入
+5 5
+输出
+1 4<br/>2 3<br/>5
+
+#include<iostream>
+#include<vector>
+using namespace std;
+vector<int> v;
+void dfs(int pos,int sum,int m,int n)
+{
+    if(sum>m)
+        return;
+    if(sum == m)
+    {
+        for(int i = 0;i<v.size()-1;i++)
+            cout<<v[i]<<' ';
+        cout<<v[v.size()-1]<<endl;
+    }
+    for(int i = pos;i<=n ;i++)
+    {
+        v.push_back(i);
+        dfs(i+1,sum+i,m,n);
+        v.pop_back();
+    }
+}
+int main()
+{
+    int n,m;
+    while(cin>>n>>m)
+    {
+        dfs(1,0,m,n);
+    }
+    return 0;
+}
