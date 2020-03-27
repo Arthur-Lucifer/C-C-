@@ -1,0 +1,60 @@
+问题描述
+　　小明对类似于 hello 这种单词非常感兴趣，这种单词可以正好分为四段，第一段由一个或多个辅音字母组成，第二段由一个或多个元音字母组成，第三段由一个或多个辅音字母组成，第四段由一个或多个元音字母组成。
+　　给定一个单词，请判断这个单词是否也是这种单词，如果是请输出yes，否则请输出no。
+　　元音字母包括 a, e, i, o, u，共五个，其他均为辅音字母。
+输入格式
+　　输入一行，包含一个单词，单词中只包含小写英文字母。
+输出格式
+　　输出答案，或者为yes，或者为no。
+样例输入
+lanqiao
+样例输出
+yes
+样例输入
+world
+样例输出
+no
+评测用例规模与约定
+对于所有评测用例，单词中的字母个数不超过100。
+思路：字符串需要划分[辅音][元音][辅音][元音]四块
+while循环走完一块 必须走完四块且走到字符串末尾才符合要求
+不符合情况：
+1）字符串第一个是元音
+2）走前三块时早已到了字符串末尾
+3）走完四块还是没走到字符串末尾
+#include<iostream>
+#include<string>
+using namespace std;
+bool letter(string str)
+{
+	string yuan = "aeiou";
+	if (yuan.find(str[0]) != yuan.npos)
+		return false;
+	int i = 0;
+	while (i < str.size() && yuan.find(str[i]) == yuan.npos)
+		i++;
+	if (i == str.size())
+		return false;
+	while (i < str.size() && yuan.find(str[i]) != yuan.npos)
+		i++;
+	if (i == str.size())
+		return false;
+	while (i < str.size() && yuan.find(str[i]) == yuan.npos)
+		i++;
+	if (i == str.size())
+		return false;
+	while (i < str.size() && yuan.find(str[i]) != yuan.npos)
+		i++;
+	if (i == str.size())
+		return true;
+	return false;
+}
+int main()
+{
+	string str;
+	while (cin >> str)
+	{
+		cout << (letter(str) ? "yes" : "no") << endl;
+	}
+	return 0;
+}
