@@ -1,0 +1,99 @@
+问题描述
+　　小明要组织一台晚会，总共准备了 n 个节目。然后晚会的时间有限，他只能最终选择其中的 m 个节目。
+　　这 n 个节目是按照小明设想的顺序给定的，顺序不能改变。
+　　小明发现，观众对于晚上的喜欢程度与前几个节目的好看程度有非常大的关系，他希望选出的第一个节目尽可能好看，在此前提下希望第二个节目尽可能好看，依次类推。
+　　小明给每个节目定义了一个好看值，请你帮助小明选择出 m 个节目，满足他的要求。
+输入格式
+　　输入的第一行包含两个整数 n, m ，表示节目的数量和要选择的数量。
+　　第二行包含 n 个整数，依次为每个节目的好看值。
+输出格式
+　　输出一行包含 m 个整数，为选出的节目的好看值。
+样例输入
+5 3
+3 1 2 5 4
+样例输出
+3 5 4
+样例说明
+　　选择了第1, 4, 5个节目。
+评测用例规模与约定
+　　对于 30% 的评测用例，1 <= n <= 20；
+　　对于 60% 的评测用例，1 <= n <= 100；
+　　对于所有评测用例，1 <= n <= 100000，0 <= 节目的好看值 <= 100000。
+思路：这题说明不是很明确，缺乏样例来验证题目。
+对于题目中（选出的第一个节目尽可能好看，在此前提下希望第二个节目尽可能好看，依次类推）我有两种想法
+第一种全部尽可能大，那么把小的去掉就行，排序取前m个大的数
+根据样例
+数组3 1 2 5 3
+排序后1 2 3 3 5
+第二种在每次在能满足节目数的情况下选最大的
+根据样例
+数组3 1 2 5 3
+从0-2取最大3
+从1-3取最大5
+从4取最大3
+两种解法都能得到样例答案 3 5 3
+由于缺乏评测，可能数据规模大后有影响
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+int main()
+{
+	int m,n,i;
+	while (cin >> n >> m)
+	{
+		vector<int> v(n);
+		for(i = 0;i<n;i++)
+			cin>>v[i];
+		vector<int> t(v);
+		sort(t.begin(),t.end());
+		vector<int>::iterator it = v.begin();
+		for(i = 0;i<n-m;i++)
+		{
+			while(it!=v.end())
+			{
+				if(t[i] == *it)
+					break;
+				it++;
+			}
+			v.erase(it);
+		}
+		for(i = 0;i<m-1;i++)
+			cout<<v[i]<<" ";
+		cout<<v[m-1]<<endl;
+	}
+	return 0;
+}
+int main()
+{
+	int m, n, i;
+	while (cin >> n >> m)
+	{
+		vector<int> v(n);
+		vector<int> res(m);
+		int j = 0;
+		for (i = 0; i < n; i++)
+			cin >> v[i];
+		vector<int>::iterator it = v.begin();
+		while (m)
+		{
+			vector<int> t(it, v.end() - m+1);
+			sort(t.begin(), t.end());
+			res[j++] = t[t.size() - 1];
+			while (it != v.end())
+			{
+				if (t[t.size() - 1] == *it)
+					break;
+				it++;
+			}
+			if (it != v.end())
+				it++;
+			m--;
+		}
+		for (i = 0; i < res.size()-1; i++)
+			cout << res[i] << " ";
+		cout << res[res.size() - 1] << endl;
+	}
+	return 0;
+}
