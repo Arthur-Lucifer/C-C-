@@ -1,0 +1,146 @@
+40m大刀
+#include<iostream>
+#include<vector>
+using namespace std;
+int length(vector<vector<int>> v, int X, int Y, int L, int M)
+{
+	int t = L;
+	while (1)
+	{
+		int i = ((X - L + 1) >= 0 ? (X - L + 1) : 0);
+		int a = ((X + L - 1) < M ? (X + L - 1) : M);
+		int b = ((Y + L - 1) < M ? (Y + L - 1) : M);
+		for (; i < a; i++)
+		{
+			int j = ((Y - L + 1) >= 0 ? (Y - L + 1) : 0);
+			for (; j < b; j++)
+			{
+				t += v[i][j];
+				v[i][j] = 0;
+			}
+		}
+		if (X - L >= 0)
+		{
+			t += v[X - L][Y];
+			v[X - L][Y] = 0;
+		}
+		if (X + L < M)
+		{
+			t += v[X + L][Y];
+			v[X + L][Y] = 0;
+		}
+		if (Y - L >= 0)
+		{
+			t += v[X][Y - L];
+			v[X][Y - L] = 0;
+		}
+		if (Y + L < M)
+		{
+			t += v[X][Y + L];
+			v[X][Y + L] = 0;
+		}
+		if (t == L)
+			return L;
+		L = t;
+	}
+	return L;
+}
+int main()
+{
+	int T, M, L, X, Y;
+	cin >> T;
+	while (T--)
+	{
+		cin >> M >> L;
+		vector<vector<int>> v(M, vector<int>(M, 0));
+		for (int i = 0; i < M; i++)
+		{
+			for (int j = 0; j < M; j++)
+			{
+				cin >> v[i][j];
+			}
+		}
+		cin >> X >> Y;
+		cout << length(v, X, Y, L, M) << endl;
+	}
+	return 0;
+}
+集合操作
+//#include<iostream>
+//#include<vector>
+//using namespace std;
+//int main()
+//{
+//	int T, N, M;
+//	int OP, X, Y;
+//	cin >> T;
+//	while (T--)
+//	{
+//		cin >> N >> M;
+//		vector<vector<int>> v(N, vector<int>(1, 0));
+//		for (int i = 1; i <= N; i++)
+//			v[i - 1][0] = i;
+//		while (M--)
+//		{
+//			cin >> OP;
+//			if (OP == 1)
+//			{
+//				vector<vector<int>> t;
+//				cin >> X >> Y;
+//				int a = -1, b = -1;
+//				for (int i = 0; i < v.size(); i++)
+//				{
+//					for (int j = 0; j < v[i].size(); j++)
+//					{
+//						if (v[i][j] == X)
+//							a = i;
+//						if (v[i][j] == Y)
+//							b = i;
+//					}
+//					if (i != a && i != b)
+//						t.push_back(v[i]);
+//				}
+//				t.push_back(v[a]);
+//				if (a != b)
+//				{
+//					for (int i = 0; i < v[b].size(); i++)
+//						t[t.size() - 1].push_back(v[b][i]);
+//				}
+//				v = t;
+//			}
+//			else if (OP == 2)
+//			{
+//				vector<vector<int>> t;
+//				cin >> X;
+//				for (int i = 0; i < v.size(); i++)
+//				{
+//					vector<int> te;
+//					for (int j = 0; j < v[i].size(); j++)
+//					{
+//						if (v[i][j] != X)
+//							te.push_back(v[i][j]);
+//					}
+//					t.push_back(te);
+//				}
+//				t.push_back(vector<int>(1, X));
+//				v = t;
+//			}
+//			else if (OP == 3)
+//			{
+//				cin >> X;
+//				for (int i = 0; i < v.size(); i++)
+//				{
+//					for (int j = 0; j < v[i].size(); j++)
+//					{
+//						if (v[i][j] == X)
+//						{
+//							cout << v[i].size() << endl;
+//							break;
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
+//	return 0;
+//}
