@@ -1,0 +1,36 @@
+// write your code here cpp
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    string str1,str2;
+    while(cin>>str1>>str2)
+    {
+        int count = 0;
+        for (size_t i=0; (i=str1.find(str2,i))!= str1.npos;i+=str2.size())
+             count++;
+        cout<<count<<endl;
+    }
+    return 0;
+}
+
+// write your code here cpp
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    vector<long> v(80);
+    v[0] = v[1] = 1;
+    for(int i = 2;i<80;i++)
+        v[i] = v[i-1] + v[i-2];
+    int from,to;
+    while(cin>>from>>to)
+    {
+        long sum = 0;
+        for(int i = from-1;i<to;i++)
+            sum += v[i];
+        cout<<sum<<endl;
+    }
+}
