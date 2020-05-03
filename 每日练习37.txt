@@ -1,0 +1,71 @@
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        int c[26]={0};
+        int t;
+        int max = 0;
+        int temp = 0;
+        string str;
+        while(n--)
+        {
+            cin>>str;
+            t = str[0] - 'A';
+            cin>>str;
+            if(str == "connect")
+            {
+                c[t]++;
+                if(c[t]>0)
+                {
+                    temp++;
+                    if(temp>max)
+                        max = temp;
+                }
+            }
+            else if(str == "disconnect")
+            {
+                c[t]--;
+                if(c[t]==0)
+                    temp--;
+            }
+        }
+        cout<<max<<endl;
+    }
+    return 0;
+}
+
+
+// write your code here cpp
+#include<iostream>
+#include<string>
+#include<set>
+using namespace std;
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        string str;
+        set<string> s;
+        while(n--)
+        {
+            cin>>str;
+            s.insert(str);
+        }
+        auto it = s.begin();
+        while(it!=--s.end())
+        {
+            auto t = it++;
+            int pos = (*it).find(*t);
+            if(pos == string::npos || pos != 0 || (*it)[(*t).size()] != '\/')
+                cout<<"mkdir -p "<<*t<<endl;
+        }
+        cout<<"mkdir -p "<<*(it)<<endl;
+        cout<<endl;
+    }
+    return 0;
+}
