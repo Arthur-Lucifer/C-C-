@@ -1,0 +1,57 @@
+#include<iostream>
+#include<string>
+#include<vector>
+#include<cmath>
+using namespace std;
+int main()
+{
+    string s1,s2;
+    int len1,len2;
+    while(cin>>s1>>s2>>len1>>len2)
+    {
+        vector<int> v;
+        if(len2>s1.size())
+            s1.append(len2-s1.size(),'a');
+        if(len2>s2.size())
+            s1.append(len2-s2.size(),'z'+1);
+        for(int i = 0;i<len2;i++)
+            v.push_back(s2[i]-s1[i]);
+        
+        int res = 0;
+        for(int i = len1;i<=len2;i++)
+            for(int j = 0;j<i;j++)
+                res += v[j] * pow(26,i-1-j);
+        cout<<--res<<endl;
+    }
+}
+
+// write your code here cpp
+#include<iostream>
+#include<string>
+#include<vector>
+using namespace std;
+int theLongestStr(string m, string n)
+{
+    vector<vector<int>> ret(m.size() + 1, vector<int>(n.size() + 1, 0));
+    for(int i = 0; i < m.size(); ++i)
+    {
+        for(int j = 0; j < n.size(); ++j)
+        {
+            if(m[i] == n[j])
+                ret[i + 1][j + 1] = ret[i][j] + 1;
+            else
+                ret[i + 1][j + 1] = max(ret[i][j + 1], ret[i + 1][j]);
+        }
+    }
+    
+    return ret[m.size()][n.size()];
+}
+int main()
+{
+    string str1,str2;
+    while(cin>>str1>>str2)
+    {
+        cout<<theLongestStr(str1, str2)<<endl;
+    }
+    return 0;
+}
