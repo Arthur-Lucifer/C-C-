@@ -1,0 +1,62 @@
+
+
+// write your code here cpp
+#include<iostream>
+#include<vector>
+#include<stack>
+using namespace std;
+int calculator(vector<char> v)
+{
+    stack<int> t;
+    int sum = 0;
+    for(int i = 0;i<v.size();i++)
+    {
+        if(v[i]>='0' && v[i] <='9')
+            t.push(v[i]-'0');
+        else if(v[i]=='+')
+        {
+            int temp = t.top();
+            t.pop();
+            temp += t.top();
+            t.pop();
+            t.push(temp);
+        }
+        else if(v[i]=='-')
+        {
+            int temp = t.top();
+            t.pop();
+            temp -= t.top();
+            t.pop();
+            t.push(-temp);
+        }
+        else if(v[i]=='*')
+        {
+            int temp = t.top();
+            t.pop();
+            temp *= t.top();
+            t.pop();
+            t.push(temp);
+        }
+        else if(v[i]=='/')
+        {
+            int temp = t.top();
+            t.pop();
+            temp /= t.top();
+            t.pop();
+            t.push(temp);
+        }
+    }
+    return t.top();
+}
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        vector<char> v(n);
+        for(int i = 0;i<n;i++)
+            cin>>v[i];
+        cout<<calculator(v)<<endl;
+    }
+    return 0;
+}
