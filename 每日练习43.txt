@@ -1,0 +1,66 @@
+#include<iostream>
+#include<set>
+#include<string>
+using namespace std;
+int main()
+{
+    int n;
+    string str;
+    string NUM = "22233344455566677778889999";
+    while(cin>>n)
+    {
+        set<string> s;
+        while(n--)
+        {
+            cin>>str;
+            string t;
+            for(int i = 0;i<str.size();i++)
+            {
+                if(isupper(str[i]))
+                    t += NUM[str[i] - 'A'];
+                else if(isalnum(str[i]))
+                    t += str[i];
+                if(t.size() == 3)
+                    t += '-';
+            }
+            s.insert(t);
+        }
+        for(auto it = s.begin();it!=s.end ();it++)
+        {
+            cout<<*it<<endl;
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+
+#include<iostream>
+#include<vector>
+using namespace std;
+vector<int> v;
+void dfs(int pos,int sum,int m,int n)
+{
+    if(sum>m)
+        return;
+    if(sum == m)
+    {
+        for(int i = 0;i<v.size()-1;i++)
+            cout<<v[i]<<' ';
+        cout<<v[v.size()-1]<<endl;
+    }
+    for(int i = pos;i<=n;i++)
+    {
+        v.push_back(i);
+        dfs(i+1,sum+i,m,n);
+        v.pop_back();
+    }
+}
+int main()
+{
+    int n,m;
+    while(cin>>n>>m)
+    {
+        dfs(1,0,m,n);
+    }
+    return 0;
+}
