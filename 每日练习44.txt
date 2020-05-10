@@ -1,0 +1,87 @@
+// write your code here cpp
+#include<iostream>
+#include<string>
+using namespace std;
+int main()
+{
+    string str;
+    while(cin>>str)
+    {
+        for(int pos;(pos = str.find("_")) != str.npos;)
+        {
+            str.erase(pos,1);
+            str[pos] &= -33;
+        }
+        cout<<str<<endl;
+    }
+}
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int main()
+{
+    string str;
+    while(getline(cin, str))
+    {
+        vector<string> res;
+        for(int i = 0;i<str.size();i++)
+        {
+            string t;
+            while(i<str.size() && !isalpha(str[i]))
+                i++;
+            if(i<str.size() && isalpha(str[i]))
+            {
+                while(i<str.size() && isalpha(str[i]))
+                    t += str[i++];
+                res.push_back(t);
+            }
+        }
+        for(int i = res.size()-1;i>0;i--)
+            cout<<res[i]<<" ";
+        cout<<res[0]<<endl;
+    }
+    return 0;
+}
+
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+string rev1(string str)
+{
+	string res;
+    for(int i = 0;i<str.size();i++)
+    {
+        while(i<str.size() && !isalpha(str[i]))
+            i++;
+        while(i<str.size() && isalpha(str[i]))
+            res += str[i++];
+        res += ' ';
+    }
+    res.erase(res.find_last_not_of(" ") + 1);
+    reverse(res.begin(), res.end());
+    auto it = res.begin();
+    int j = 0;
+    for(int i = 0;i<res.size();i++)
+    {
+        if(!isalpha(res[i]))
+        {
+            reverse(it+j, it+i);
+            j = i+1;
+        }
+    }
+    reverse(it+j,res.end());
+    return res;
+}
+int main()
+{
+    string str;
+    while(getline(cin, str))
+    {
+        cout<<rev1(str)<<endl;
+    }
+	return 0;
+}
