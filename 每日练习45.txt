@@ -1,0 +1,71 @@
+// write your code here cpp
+#include<iostream>
+#include<string>
+using namespace std;
+bool exist(string str1,string str2)
+{
+    int let[26] = {0};
+    for(int i = 0;i<str1.size();i++)
+        let[str1[i]-'A']++;
+    for(int i = 0;i<str2.size();i++)
+        let[str2[i]-'A']--;
+    for(int i = 0;i<26;i++)
+        if(let[i]<0)
+            return false;
+    return true;
+}
+int main()
+{
+    string str1,str2;
+    while(cin>>str1>>str2)
+        cout<<(exist(str1,str2) ? "Yes" : "No")<<endl;
+    return 0;
+}
+
+#include<iostream>
+#include<set>
+#include<vector>
+#include<string>
+#include<algorithm>
+using namespace std;
+bool brother(string str1,string str2)
+{
+    if(str1 == str2)
+        return false;
+    sort(str1.begin(),str1.end());
+    sort(str2.begin(),str2.end());
+    if(str1 == str2)
+        return true;
+    return false;
+}
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        vector<string> s(n);
+        //vector<string> v;
+        string str,res;
+        int count = 0;
+        for(int i = 0;i<n;i++)
+            cin>>s[i];
+        cin>>str>>n;
+        sort(s.begin(),s.end());
+        for(int i = 0;i<s.size();i++)
+        {
+            if(s[i].size() == str.size() && brother(s[i],str))
+            {
+                count++;
+                //v.push_back(s[i]);
+                if(count == n)
+                    res = s[i];
+            }
+        }
+        cout<<count<<endl;
+        //if(v.size() && n<=v.size())
+        //    cout<<v[n-1]<<endl;
+        if(count && count>=n)
+            cout<<res<<endl;
+    }
+    return 0;
+}
