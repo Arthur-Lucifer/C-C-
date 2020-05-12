@@ -1,0 +1,57 @@
+class Solution {
+public:
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        sort(numbers.begin(),numbers.end());
+        int count = 0;
+        for(int i = 0;i<numbers.size();i++)
+            if(numbers[numbers.size()/2] == numbers[i])
+                count++;
+        return (count>numbers.size()/2) ? numbers[numbers.size()/2] : 0;
+    
+    }
+};
+
+#include<iostream>
+#include<string>
+#include<vector>
+#include<list>
+#include<algorithm>
+using namespace std;
+bool cmp(pair<string, int> a, pair<string, int> b){
+    return a.second > b.second;
+}
+int main()
+{
+    string str;
+    list<pair<string, int>> l;
+    while(getline(cin,str))
+    {
+        if (str.size() == 0)
+            break;
+        int flag = 1;
+		for (auto it = l.begin(); it != l.end(); it++)
+		{
+			if (it->first == str ) {
+				it->second++;
+				flag = 0;
+				break;
+			}
+		}
+		if(flag)
+			l.push_back(make_pair(str, 1));
+        if(l.size()>8)
+            l.pop_front();
+    }
+    vector<pair<string, int>> v(l.begin(),l.end());
+    sort(v.begin(),v.end(),cmp);
+    for(int i = 0;i<v.size();i++)
+    {
+        int pos = v[i].first.rfind('\\');
+        if(pos!=v[i].first.npos)
+            v[i].first = v[i].first.substr(pos + 1);
+        pos = v[i].first.find_last_of(' ');
+        if(pos>16)
+            v[i].first = v[i].first.substr(pos - 16);
+        cout<<v[i].first<<" "<<v[i].second<<endl;
+    }
+}
