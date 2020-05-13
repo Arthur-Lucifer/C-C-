@@ -1,0 +1,91 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+void dfs(vector<int> weight,vector<int> height,vector<bool> vis,int h,int w,int &max)
+{
+    int flag = 1;
+    for(int i = 0;i<vis.size();i++)
+    {
+        if(vis[i] == false && weight[i]<=w && height[i]<=h)
+        {
+            flag = 0;
+            vis[i] = true;
+            dfs(weight,height,vis,height[i],weight[i],max);
+            vis[i] = false;
+        }
+    }
+    int count;
+    if(flag)
+    {
+        for(int i = 0;i<vis.size();i++)
+            if(vis[i] == true)
+                count++;
+        if(max<count)
+            max = count;
+    }
+}
+int main()
+{
+    int n;
+    while(cin>>n)
+    {
+        vector<int> weight(n);
+        vector<int> height(n);
+        vector<bool> vis(n);
+        int a;
+        for(int i = 0;i<n;i++)
+        {
+            cin>>a>>weight[i]>>height[i];
+        }
+        int max = 0,i;
+        dfs(weight,height,vis,height[i],weight[i],max);
+        for(i = 0;i<vis.size();i++)
+        {
+            vis[i] = true;
+            dfs(weight,height,vis,height[i],weight[i],max);
+            vis[i] = false;
+        }
+        cout<<max<<endl;
+    }
+    return 0;
+}
+
+#include<iostream>
+#include<vector>
+using namespace std;
+void dfs1(vector<int> v,int pos, int& max, int& t,int& k,int d)
+{
+    if(pos>=(int)v.size())
+    {
+        if(max<t)
+            max = t;
+        return;
+    }
+    for(size_t i = pos+1;i<v.size();i++)
+    {
+        if(i-pos<=d && k)
+        {
+            t *= v[i];
+            k--;
+            dfs1(v,i,max,t,k,d);
+            t /= v[i];
+            k++;
+        }
+    }
+    return;
+}
+int main()
+{
+    int n,k,d;
+    while(cin>>n)
+    {
+        vector<int> v(n);
+        for(int i = 0;i<n;i++)
+            cin>>v[i];
+        cin>>k>>d;
+        int max = 0;
+        dfs1(v,0,max,1,k,d);
+        cout<<max<<endl;
+    }
+    return 0;
+}
