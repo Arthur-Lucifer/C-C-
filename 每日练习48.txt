@@ -1,0 +1,42 @@
+class MaxGap {
+public:
+    int findMaxGap(vector<int> A, int n) {
+        // write code here
+        set<int> B(A.begin(),A.end());
+        int t = A[n-1];
+        B.erase(t);
+        int temp,max =  abs(*(--B.end()) - t);
+        for(int i = n-2;i>=0;i--)
+        {
+            B.erase(A[i]);
+            t = A[i] > t ? A[i] : t;
+            if(!B.empty())
+                temp = abs(*(--B.end()) - t);
+            max = temp>max ? temp : max;
+        }
+        return max;
+    }
+};
+
+class Printer {
+public:
+    vector<int> clockwisePrint(vector<vector<int> > mat, int n, int m) {
+        // write code here
+        vector<int> res;
+        int i = 0,j = 0,num = m*n;
+        for(int k = 0;res.size() != num;k++)
+        {
+            while(j<m-1)
+                res.push_back(mat[i][j++]);
+            m--;
+            while(i<n-1)
+                res.push_back(mat[i++][j]);
+            m--;
+            while(j>=k)
+                res.push_back(mat[i][j--]);
+            while(i>=k)
+                res.push_back(mat[i--][j]);
+        }
+        return res;
+    }
+};
