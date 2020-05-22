@@ -6,6 +6,27 @@
 进阶:
 如果你已经实现复杂度为 O(n) 的解法，尝试使用更为精妙的分治法求解。
 
+暴力 O(n^2)
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int max = INT_MIN,t = 0;
+        for(int i = 0;i<n;i++)
+        {
+            int sum = 0;
+            for(int j = i;j<n;j++)
+            {
+                sum += nums[j];
+                if(sum>max)
+                    max = sum;
+            }
+        }
+        return max;
+    }
+};
+
+贪心 O(n)
 class Solution {
 public:
     int maxSubArray(vector<int>& nums) {
