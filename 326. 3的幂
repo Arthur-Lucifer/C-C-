@@ -25,6 +25,14 @@ public:
             return n % 3 == 0 && isPowerOfThree(n / 3);
     }
 };
+换底公式 可扩展到n次幂
+class Solution {
+public:
+    bool isPowerOfThree(int n) {
+        double res = log10(n) / log10(3);
+        return n > 0 && (res - (int)res) == 0;
+    }
+};
 3的幂次质因子只有3，而整数范围内的3的幂次最大是1162261467：
 class Solution {
 public:
