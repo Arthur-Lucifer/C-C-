@@ -1,0 +1,75 @@
+#include<iostream>
+#include<map>
+#include<list>
+using namespace std;
+int main()
+{
+    int N,K,opt,x,y;
+    cin>>N>>K;
+    map<int, list<pair<int, int>>::iterator> map;
+    list<pair<int, int>> l;
+    while(N--)
+    {
+        cin>>opt;
+        if(opt == 1)
+        {
+            cin>>x>>y;
+            auto it = map.find(x);
+            if (it == map.end()) 
+            {
+                if (l.size() == K)
+                {
+                    auto lastPair = l.back();
+                    int lastKey = lastPair.first;
+                    map.erase(lastKey);
+                    l.pop_back();
+                }
+                l.push_front(make_pair(x, y));
+                map[x] = l.begin();
+            }
+            else 
+            {
+                l.erase(map[x]);
+                l.push_front(make_pair(x, y));
+                map[x] = l.begin();
+            }
+        }
+        else
+        {
+            cin>>x;
+            auto it = map.find(x);
+            if (it == map.end()) 
+                cout<<-1<<endl;
+            else{
+                pair<int, int> kv = *map[x];
+                l.erase(map[x]);
+                l.push_front(kv);
+                map[x] = l.begin();
+                cout<< kv.second <<endl;
+            }
+        }
+    }
+    return 0;
+}
+
+
+#include<iostream>
+#include<set>
+using namespace std;
+int main()
+{
+    int n,t,k;
+    set<int> s;
+    cin>>n;
+    while(n--)
+    {
+        cin>>t;
+        s.insert(t);
+    }
+    cin>>k;
+    auto it = s.begin();
+    while (--k)
+	    it++;
+    cout << *it << endl;
+    return 0;
+}
