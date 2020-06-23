@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>一次性清空</title>
+	</head>
+	<body>
+		姓名：<input type="text" id="txt1" name="mytxt" /><br>
+		<input type="button" value="确定" onclick="findBtn()" />
+		<input type="button" value="清空" onclick="clearBtn()" /><br>
+	</body>
+</html>
+
+<script>
+    function findBtn(){
+		var txts = document.getElementsByTagName("input");
+		var txt = txts[1];
+		console.log(txt.type);
+		console.log(txt.id);
+		console.log(txt.value);
+	}
+   
+   function clearBtn()
+    {
+        document.getElementById("txt1").value="";
+        document.getElementName("mytxt").value="";
+    }
+
+
+ </script>
+  
