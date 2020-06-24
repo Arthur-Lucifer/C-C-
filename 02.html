@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>定时显示当前时间</title>
+	</head>
+	<body>
+		<div id="curTime"></div>
+	</body>
+</html>
+
+<script>
+	function getCurDate(){
+		var d = new Date();
+		var stime = d.toLocaleString();
+		document.getElementById("curTime").innerHTML=stime;
+		setTimeout("getCurDate()", 1000);
+	}
+	
+	getCurDate();
+	
+</script>
