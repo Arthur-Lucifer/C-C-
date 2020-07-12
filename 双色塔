@@ -1,0 +1,71 @@
+现在有红，绿两种颜色的石头，现在我们需要用这两种石头搭建一个塔，塔需要满足如下三个条件：  1． 第1层应该包含1块石头，第2层应该包含两块，第 i 层需要包含 i 块石头。  2． 同一层的石头应该是同一个颜色（红或绿）。  3． 塔的层数尽可能多。  问在满足上面三个条件的前提下，有多少种不同的建造塔的方案，当塔中任意一个对应位置的石头颜色不同，我们就认为这两个方案不相同。石头可以不用完。
+输入描述:
+输入仅包含两个正整数，分别表示红和绿砖块的数量a，b（0<=a,b<=2*10^5,a+b>=1）。
+输出描述:
+输出和仅包含一个正整数，表示不同的方案数对1000000007取模的结果。
+示例1
+输入
+4 6
+输出
+2
+
+const int MOD = 1000000007;
+ 
+/*
+滚动数组
+dp[level & 1][j] 表示前level层放j个石头
+个数比较少的那个颜色的石头，假定为绿色
+这样在两种颜色不均匀时，可以优化复杂度
+*/ 
+int theDoubleColorTower(int a, int b)
+{
+    if(a == 0 && b == 0)
+        return 0;
+    if(a == 0 || b == 0)
+        return 1;
+    if(a > b)
+        swap(a, b);
+     
+    vector<vector<int>> dp(2, vector<int>(300001, 0));
+    int sum = 1, l = 0, r = 0, s = 0;
+    dp[1][0] = dp[1][1] = 1;
+	int cur = 0, last = 0;
+    for(int i = 2; i <= sqrt(2 * (a + b)); ++i)
+    {
+        sum += i;
+        int q = min(sum, a);//前i层最多要放的绿石个数，但是不能超过绿石的总数a
+		//最坏情况，前i层将b个红石放完（sum - b > 0），那么前i层至少放sum-b个绿石
+		//若sum - b < 0, 说明前i层最少可以不放红石，即dp[i][j]中j从0开始更新
+		//综上，j的更新范围下界为max(sum - b, 0)
+		int p = max(sum - b, 0);
+        //下届大于上界，说明红石放完，绿石数量也不够放下一层了，那么就是最高层了，不再更新
+        if(p > q)
+            break;
+        r = q;
+        l = p;
+		cur = i & 1;
+		last = !cur;
+		//dp[j]表示第i层放红石，
+		//dp[j - i]表示第i层放绿石（那么前i层至少有i个绿石（即 j >= i））
+		//转移方程：dp[j] = dp[j] + dp[j - i]
+		//前i层的绿石少于j，说明第i层只可能放了红石：dp[j] = dp[j];
+        for(int j = l; j < i; ++j)
+			dp[cur][j] = dp[last][j];
+        for(int j = i; j <= q; ++j)
+			dp[cur][j] = (dp[last][j] + dp[last][j - i]) % MOD;
+    }
+     
+    for(int i = l; i <= r; ++i)
+        s = (s + dp[cur][i]) % MOD;
+    return s;
+}
+int main()
+{
+    int a = 0, b = 0;
+    while(cin >> a >> b)
+    {
+        cout << theDoubleColorTower(a, b);
+    }
+     
+    return 0;
+}
