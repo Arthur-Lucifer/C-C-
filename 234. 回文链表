@@ -1,0 +1,64 @@
+请判断一个链表是否为回文链表。
+示例 1:
+输入: 1->2
+输出: false
+示例 2:
+输入: 1->2->2->1
+输出: true
+进阶：
+你能否用 O(n) 时间复杂度和 O(1) 空间复杂度解决此题？
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        // 方法1. 使用数组
+        /*
+        vector<int> v;
+        while(head){
+            v.push_back(head->val);
+            head = head->next;
+        }
+        // 判断是否回文
+        for(int i=0; i<v.size()/2; ++i){
+            if(v[i] != v[v.size()-1-i]){
+                return false;
+            }
+        }
+        return true;
+        */
+
+        // 方法2. 反转链表
+        if(!head || !head->next) return true;
+        ListNode* slow = head, * fast = head;
+        // 将slow指针移动到链表中间位置
+        while(fast && fast->next){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        // 反转后半部分
+        ListNode* curNode = slow, *nextNode = slow->next; 
+        while(nextNode){
+            ListNode* tmp = nextNode->next;
+            nextNode->next = curNode;
+            curNode = nextNode;
+            nextNode = tmp;
+        }
+        slow->next = nullptr;
+        // 开始比较是否相等
+        while(head && curNode){
+            if(head->val != curNode->val)
+                return false;
+            head = head->next;
+            curNode = curNode->next;
+        }
+        return true;
+    }
+};
