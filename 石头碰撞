@@ -1,0 +1,54 @@
+给定一组石头，每个石头有一个正数的重量。每一轮开始的时候，选择两个石头一起碰撞，假定两个石头的重量为x，y，x<=y,碰撞结果为
+1. 如果x==y，碰撞结果为两个石头消失
+2. 如果x != y，碰撞结果两个石头消失，生成一个新的石头，新石头重量为y-x
+最终最多剩下一个石头为结束。求解最小的剩余石头质量的可能性是多少。
+输入描述:
+第一行输入石头个数(<=100)
+第二行输入石头质量，以空格分割，石头质量总和<=10000
+输出描述:
+最终的石头质量
+示例1
+输入
+6
+2 7 4 1 8 1
+输出
+1
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+class Solution
+{
+    public:
+        int test(int n, vector<int> weights)
+        {
+            int sum = 0;
+            for (int weight:weights)
+            {
+                sum+=weight;
+            }
+            int maxCapcity = sum/2;
+            vector<int> dp(maxCapcity+1,0);
+            for (int i=0;i<n;i++)
+            {
+                for (int j=maxCapcity;j>=weights[i];j--)
+                {
+                    dp[j] = max(dp[j],dp[j-weights[i]]+weights[i]);
+                }
+            }
+            return sum - 2*dp[maxCapcity];
+        }
+};
+int main()
+{
+    int n;
+    cin >> n;
+    vector<int> weights(n);
+    for (int i=0;i<n;i++)
+    {
+        cin >> weights[i];
+    }
+    int res = Solution().test(n,weights);
+    cout << res;
+    return 0;
+}
