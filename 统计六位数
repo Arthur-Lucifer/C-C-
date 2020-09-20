@@ -1,0 +1,33 @@
+/*希望可以统计在M和N之间（M < N，且包含M和N）有多少个六位数ABCDEF满足以下要求：
+(1) ABCDEF这六个数字均不相同，即A、B、C、D、E和F表示六个不同的数字。
+(2) AB + CD = EF。即将这个六位数拆成三个两位数，使得第1个和第2个两位数的和等于第3个两位数。
+#include<iostream>
+using namespace std;
+int main()
+{
+	int M, N;
+	cin >> M >> N;
+	int count = 0;
+	M = M > 99999 ? M : 100000;
+	N = N > 999999 ? 999999 : N;
+	for (int i = M; i <= N; i++)
+	{
+		int A = M / 100000;
+		int B = M / 10000 % 10;
+		int C = M / 1000 % 10;
+		int D = M / 100 % 10;
+		int E = M / 10 % 10;
+		int F = M % 10;
+		if (!A || !C || !E 
+			|| A == B || A == C || A == D || A == E || A == F
+			|| B == C || B == D || B == E || B == F
+			|| C == D || C == E || C == F
+			|| D == E || D == F || E == F)
+		{
+			continue;
+		}
+		if (A * 10 + B + C * 10 + D == E * 10 + F)
+			count++;
+	}
+	cout << count << endl;
+}
