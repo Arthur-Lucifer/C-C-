@@ -1,0 +1,40 @@
+#include<iostream>
+#include<string>
+using namespace std;
+long change(string str)
+{
+	long sum = 0;
+	int k = 1;
+	for (int i = str.size() - 1; i >= 0; i--)
+	{
+		int t;
+		if (str[i] >= '0' && str[i] <= '9')
+			t = str[i] - '0';
+		else if (str[i] >= 'a' && str[i] <= 'z')
+			t = str[i] - 'a' + 10;
+		else if (str[i] >= 'A' && str[i] <= 'Z')
+			t = str[i] - 'A' + 10;
+		else if (str[i] == '-' && i == 0)
+			return -sum;
+		else
+			return 0;
+		long max = 9223372036854775807;
+		if (max - t * k <= sum)
+		{
+			sum = max;
+			
+		}
+		else {
+			sum += (t * k);
+			k *= 36;
+		}
+	}
+	return sum;
+}
+int main()
+{
+	string str;
+	cin >> str;
+	cout << change(str) << endl;
+	return 0;
+}
