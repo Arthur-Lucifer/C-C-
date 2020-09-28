@@ -1,0 +1,26 @@
+class Solution {
+public:
+	/**
+	 *
+	 * @param nums int整型vector 输入数组
+	 * @return int整型vector
+	 */
+	vector<int> smallerNumbersThanCurrent(vector<int>& nums) {
+		// write code here
+		vector<int> nt(nums);
+		sort(nt.begin(), nt.end());
+		vector<int> res(nums.size());
+		for (int i = 0; i < nums.size(); i++)
+		{
+			for (int j = 0; j < nt.size(); j++)
+			{
+				if (nums[i] == nt[j])
+				{
+					res[i] = j;
+					break;
+				}
+			}
+		}
+		return res;
+	}
+};
