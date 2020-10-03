@@ -1,0 +1,31 @@
+//	 * 合并数组
+//	 * @param arrayA int整型一维数组 数组A
+//	 * @param arrayALen int arrayA数组长度
+//	 * @param arrayB int整型一维数组 数组B
+//	 * @param arrayBLen int arrayB数组长度
+//	 * @return int整型vector
+//	 */
+//	/*
+//	[-5,0,6,8,9,10],[0,8,9,11,15]
+//	[0,8,9]
+//	*/
+//	vector<int> mergerArrays(int* arrayA, int arrayALen, int* arrayB, int arrayBLen) {
+//		// write code here
+//		vector<int> v;
+//		int i = 0, j = 0;
+//		while (i < arrayALen && j < arrayBLen)
+//		{
+//			if (arrayA[i] == arrayB[j])
+//			{
+//				v.push_back(arrayA[i]);
+//				i++;
+//				j++;
+//			}
+//			else if (arrayA[i] < arrayB[j])
+//				i++;
+//			else
+//				j++;
+//		}
+//		return v;
+//	}
+//};
