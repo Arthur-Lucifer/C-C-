@@ -1,0 +1,39 @@
+题目描述
+给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，按结点数值大小顺序第三小结点的值为4。
+/*
+struct TreeNode {
+	int val;
+	struct TreeNode *left;
+	struct TreeNode *right;
+	TreeNode(int x) :
+	val(x), left(NULL), right(NULL) {
+}
+};
+*/
+class Solution {
+public:
+TreeNode* KthNode(TreeNode* pRoot, int k)
+{
+	if(pRoot == nullptr || k <= 0){
+		return nullptr;
+	}
+	stack<TreeNode*> st;
+	TreeNode *node = pRoot;
+	do{
+		while(node != nullptr){ //将左子树全部入栈
+			st.push(node);
+			node = node->left;
+		}
+		if(!st.empty()){
+			node = st.top();
+			st.pop();
+			k--;
+			if(k == 0){
+				return node; //找到了该节点
+			}
+			node = node->right;
+		}
+	}while(node != nullptr || !st.empty());
+	return nullptr;
+}
+};
