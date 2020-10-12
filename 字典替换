@@ -1,0 +1,53 @@
+#include<iostream>
+#include<string>
+#include<map>
+#include<stack>
+using namespace std;
+string parse(string tem, int count, map<string, string> dict)
+{
+	stack<int> s;
+	string res;
+	for (int i = 0; i < tem.size(); i++)
+	{
+		if (tem[i] == '{') {
+			s.push(i);
+		}
+		else if (tem[i] == '}') {
+			string t = tem.substr(s.top() + 1, i - 1);
+			if(t == "")
+				res += "{}";
+			if (dict[t] != dict.end())
+				res += t;
+		}
+		else {
+			res += tem[i];
+		}
+	}
+}
+int main()
+{
+	string tem;
+	int count;
+	map<string, string> dict;
+	cin >> tem >> count;
+	while (count--)
+	{
+		string str;
+		cin >> str;
+		string t1, t2;
+		int i = 0;
+		for (; i < str.size(); i++)
+		{
+			if (str[i] == '-' && str[i + 1] == '>')
+				break;
+			t1 += str[i];
+		}
+		for (i += 2; i < str.size(); i++)
+		{
+			t2 += str[i];
+		}
+		dict[t1] = t2;
+	}
+	cout << parse(tem, dict.size(), dict);
+	return 0;
+}
