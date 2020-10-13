@@ -1,0 +1,67 @@
+/*求多个链表的倒数第 n 个节点值之和
+时间限制： 3000MS
+内存限制： 65536KB
+题目描述：
+对包含多个元素的单向链表集合k，取出指定链表的倒数第 n 个节点的值并求和。
+已知 :
+k, n是有效值且链表集合中的最小链表长度大于等于 n
+要求 :
+不使用额外空间
+输入描述
+第一行为一个整数n，表示要取链表倒数第几位元素
+第二行为一个整数K，表示一共要取多少行的链表
+接下来M行，每行表示一个链表，每个链表中的元素之间用逗号相隔开
+输出描述
+输出指定链表集合的倒数第n个值并求和
+样例输入
+2
+3
+1, 2, 3, 4, 5
+2, 4, 6, 8, 10
+2, 4, 6, 8, 10
+样例输出
+20*/
+#include<iostream>
+#include<vector>
+using namespace std;
+typedef struct node
+{
+	int data;
+	struct node *next;
+}Node;
+int main()
+{
+	int n, k, t;
+	int sum = 0;
+	cin >> n >> k;
+	while (k--)
+	{
+		//vector<int> v;
+		Node *head = (Node*)malloc(sizeof(Node));
+		Node *pre = head;
+		do {
+			cin >> t;
+			//v.push_back(t);
+			Node *cur = (Node*)malloc(sizeof(Node));
+			cur->data = t;
+			cur->next = NULL;
+			pre->next = cur;
+			pre = cur;
+
+		} while (getchar() != '\n');
+		//sum += v[v.size() - n];
+		Node *cur, *prev;
+		prev = cur = head;
+		for (int i = 1; i < n; i++){
+			cur = cur->next;
+		}
+		while (cur->next != NULL)
+		{
+			cur = cur->next;
+			prev = prev->next;
+		}
+		sum += prev->data;
+	}
+	cout << sum << endl;
+	return 0;
+}
