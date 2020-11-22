@@ -1,0 +1,38 @@
+题目描述 
+牛牛有一根长度为a(3 \leq a \leq 1e18)(3≤a≤1e18)的木棒，现在牛牛想将木棒分成一些段（每段木棒长度必须为整数），使得分隔后的木棍中，任意三段都不能构成三角形，牛牛想知道木棒最多被分成几段呢？
+示例1
+输入
+复制
+5
+返回值
+复制
+3
+说明
+可以分成1 1 3三段
+备注:
+
+class Solution {
+public:
+    /**
+     * 
+     * @param a long长整型 木棒的长度
+     * @return int整型
+     */
+    int stick(long long a) {
+        // write code here
+        long long x = 1,y = 1, sum = 0;
+        a -= 2;
+        for(int i = 3;;i++)
+        {
+            sum = x + y;
+            if(sum <= a){
+                a -= sum;
+                x = y;
+                y = sum;
+            }
+            else{
+                return i-1;
+            }
+        }
+    }
+};
