@@ -1,0 +1,81 @@
+题目描述 
+牛牛现在有一个长度为n的只包含数字1-9的字符串x，牛牛想用这n个数字组成k个数。这k个数每个数至少要用字符串x中的一个数字，字符串x中的每个位置的字符要在这k个数中出现一次。牛牛想知道这k个数的和最大是多少。
+组成数字的定义如下：
+比如n=3的字符串x为“121”
+如果k=3，那么组成k个数只有{1,1,2}这一种可能,和只有一种可能为4
+如果k=2，那么组成k个数的方案有{11,2},{12,1},{21,1}三种可能，和最大为21+1=22
+如果k=1，那么组成k个数的方案有{112},{121},{211}三种可能，和最大为211
+示例1
+输入
+复制
+"345",2
+返回值
+复制
+"57"
+说明
+53+4=57，无法得到比57更大的和
+示例2
+输入
+复制
+"233333",3
+返回值
+复制
+"3338"
+说明
+3332+3+3=3338，无法得到比3338更大的和
+示例3
+输入
+复制
+"111222333444555666777888999",1
+返回值
+复制
+"999888777666555444333222111"
+说明
+无法得到比999888777666555444333222111更大的和
+备注:
+对于百分之20的数据:1 \leq n \leq 5;1 \leq k \leq n;1≤n≤5;1≤k≤n;
+对于百分之50的数据:1 \leq n \leq 5000;1 \leq k \leq n;1≤n≤5000;1≤k≤n;
+对于百分之100的数据:1 \leq n \leq 100\,000;1 \leq k \leq n;1≤n≤100000;1≤k≤n;
+(注意给的字符串和返回的字符串都不带引号)
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     * 返回最大和的字符串
+     * @param x string字符串 即题目描述中所给字符串
+     * @param k int整型 即题目描述中所给的k
+     * @return string字符串
+     */
+    string addStrings(string num1, string num2) {
+        string num;
+        int i=num1.size()-1;
+        int j=num2.size()-1;
+        int n1=0,n2=0;
+        int tmp = 0;
+        int flag = 0;
+        for(;i>=0||j>=0;i--,j--)
+        {
+            n1 = (i>=0)?(num1[i]-'0'):0;
+            n2 = (j>=0)?(num2[j]-'0'):0;
+            tmp = n1 + n2 +flag;
+            num.push_back(tmp%10+'0');
+            flag = tmp/10;
+        }
+        if(flag){
+            num.push_back('1');
+        }
+        reverse(num.begin(), num.end());
+        return num;
+    }
+    string Maxsumforknumers(string x, int k) {
+        // write code here
+        sort(x.begin(),x.end(),greater<char>());
+        int i = x.size() - k + 1;
+        string str = x.substr(0, i);
+        int t = 0;
+        while(i<x.size()){
+            t += x[i++] - '0';
+        }
+        return addStrings(str,to_string(t));
+    }
+};
